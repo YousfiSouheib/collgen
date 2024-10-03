@@ -1,5 +1,5 @@
 #!/bin/bash
-# git clone https://github.com/YousfiSouheib/collgen/md5collgen-master
+# git clone https://github.com/YousfiSouheib/collgen.git
 # y. Accéder et puis on fait make
 # Create prefix #
 echo "kaity codes" >> prefix.txt
