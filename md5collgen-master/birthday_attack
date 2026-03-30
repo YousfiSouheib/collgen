@@ -1,0 +1,24 @@
+#birthday_attack.py
+import hashlib, random, string
+
+def hash_tronque(texte, bits=32):
+# Hash SHA-256 tronqué aux premiers 'bits' bits
+    h = hashlib.sha256(texte.encode()).hexdigest()
+    return int(h, 16) % (2 ** bits)
+
+def attaque_anniversaire(bits=32):
+    vus = {}          # dict hash -> message
+    tentatives = 0
+    while True:
+        msg = ''.join(random.choices(string.ascii_letters, k=8))
+        h = hash_tronque(msg, bits)
+        if h in vus and vus[h] != msg:
+            return vus[h], msg, h, tentatives
+        vus[h] = msg
+        tentatives += 1
+
+# Lancement avec hash tronqué à 32 bits
+m1, m2, h, n = attaque_anniversaire(bits=32)
+print(f"Collision trouvée en {n} tentatives !")
+print(f"  m1='{m1}'  m2='{m2}'  hash={h:#010x}")
+print(f"  Théorique : ~{int(2**16)} tentatives attendues")
